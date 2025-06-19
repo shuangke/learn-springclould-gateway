@@ -10,4 +10,9 @@ public class OrderController {
     public String order() {
         return "Order Service is running!";
     }
+
+    @GetMapping("/order/public")
+    public String orderPublic() {
+        return "Order Service is running, this method is free from authorization!";
+    }
 }
