@@ -1,0 +1,14 @@
+server:
+  port: 8761
+spring:
+  application:
+    name: eureka-server
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    service-url:
+        defaultZone: http://peer2:8762/eureka/, http://peer3:8763/eureka/
+    fetch-registry: true
+    register-with-eureka: true
