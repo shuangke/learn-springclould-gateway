@@ -34,6 +34,9 @@ spring:
                 # Predicate matching
                 - Path=/stock/**
               # Matches the path in the service, uses regex matching
+              filters:
+                - GatewayFilterForAllStockServices
+
 
             - id: order-service-router
               # Route id, no requirements, just keep it unique
