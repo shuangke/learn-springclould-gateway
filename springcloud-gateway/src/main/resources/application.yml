@@ -1,0 +1,44 @@
+server:
+  port: 80
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://peer1:8761/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    prefer-ip-address: true
+
+spring:
+  application:
+    name: springcloud-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          enabled: true
+          # Enable gateway, enabled by default
+          routes:
+            # Set routes, note this is an array, you can set multiple, separated by id
+            - id: stock-service-router
+              # Route id, no requirements, just keep it unique
+              uri: lb://stock-service
+              # Set the actual service ip:port
+              predicates:
+                # Predicate matching
+                - Path=/stock/**
+              # Matches the path in the service, uses regex matching
+
+            - id: order-service-router
+              # Route id, no requirements, just keep it unique
+              uri: lb://order-service
+              # Set the actual service ip:port
+              predicates:
+                # Predicate matching
+                - Path=/order/**
+              # Matches the path in the service, uses regex matching
+
+          discovery:
+            locator:
+              enabled: true # Enable dynamic routing
+              lower-case-service-id: true
